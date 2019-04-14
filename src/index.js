@@ -17,6 +17,7 @@ import Page2Container from '@Page/page2/index'
 import Page3Container from '@Page/page3/index'
 import SignContainer from '@Page/sign/index'
 import PersonalContainer from '@Page/personal/index'
+import OrdersContainer from '@Page/orders/index'
 import FalsePage from '@Page/404/index'             // 404界面
 
 ReactDOM.render(
@@ -30,6 +31,7 @@ ReactDOM.render(
                     <Route path='/main' component={MainContainer} />
                     <Route path='/sign' component={SignContainer} />
                     <Route path='/personal' component={PersonalContainer} />
+                    <Route path='/orders' component={OrdersContainer} />
                     <Route path='/' exact render={() => <Redirect to='/main' />} />
                     <Route path='/404' component={FalsePage} />
                     <Route exact render={() => { return <Redirect to='/404' /> }} />
