@@ -78,24 +78,30 @@ export default class UsersList extends Component {
       width: '8%',
       ...this.getColumnSearchProps('key'),
     },{
-      title: 'UserId',
+      title: '订单号',
       dataIndex: 'userId',
       key: 'userId',
-      width: '20%',
+      width: '15%',
       ...this.getColumnSearchProps('userId'),
     }, {
-      title: 'UserName',
+      title: '用户Id',
       dataIndex: 'userName',
       key: 'userName',
-      width: '20%',
+      width: '15%',
       ...this.getColumnSearchProps('userName'),
     }, {
-      title: 'UserPhone',
+      title: '用户名',
       dataIndex: 'userPhone',
       key: 'userPhone',
-      width: '20%',
+      width: '15%',
       ...this.getColumnSearchProps('userPhone'),
-    },];
+    }, {
+      title: '订单内容',
+      dataIndex: 'userPhone',
+      key: 'userPhone',
+      // width: '20%',
+      ...this.getColumnSearchProps('userPhone'),
+    }];
     return this.props.usersList.length ? <Table columns={columns} dataSource={this.props.usersList} /> : <Empty/>;
   }
 }

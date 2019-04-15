@@ -27,7 +27,10 @@ class SignContainer extends Component{
         style={{
           width:window.innerWidth,
           height:window.innerHeight,
-          background: "url('http://b-ssl.duitang.com/uploads/item/201711/28/20171128225904_dyNEU.jpeg')"}}>
+          backgroundRepeat:'no-repeat',
+          backgroundSize:'cover',
+          backgroundPosition:'bottom left',
+          backgroundImage: "url('https://img.ivsky.com/img/bizhi/pre/201811/06/jackson-006.jpg')"}}>
         <Form onSubmit={this.handleSubmit} className="login-form formContainer">
           <Form.Item>
             {getFieldDecorator('userName', {
