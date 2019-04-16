@@ -10,6 +10,11 @@ class MainContainer extends Component{
         super(props)
         // console.log(this.props)
     }
+
+    async componentDidMount(){
+        let data = await this.axios('cms/data?a=1')
+        console.log(data)
+    }
     render(){
         return(
             <div>
