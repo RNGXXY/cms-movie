@@ -1,18 +1,38 @@
 import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react';
 import { Collapse, Icon , Statistic, Row, Col, Button  } from 'antd';
 
-export default class HomeContainer extends Component {
+@inject('store')        // 向该组件中注入store中的数据和方法
+@observer               // 订阅store中数据的变化
+class HomeContainer extends Component {
   constructor(props) {
     super(props)
+    this.state={
+      userListLength:0,
+      orderListLength:0,
+      seats:0
+    }
+  }
+
+  async componentDidMount(){
+    await this.props.store.onGetUsersList()
+    await this.props.store.onGetOrdersList()
+    await this.props.store.onGetSeat()
+    let userListLength = this.props.store.usersList.length
+    let orderListLength = this.props.store.orderList.length
+    let seats = this.props.store.seatList.length
+    this.setState({
+      userListLength:userListLength,
+      orderListLength:orderListLength,
+      seats:seats
+    })
   }
 
   render() {
     const Panel = Collapse.Panel;
 
     const text = `
-      A dog is a type of domesticated animal.
-      Known for its loyalty and faithfulness,
-      it can be found as a welcome guest in many households across the world.
+      狗子的管理系统
     `;
 
     const customPanelStyle = {
@@ -32,14 +52,14 @@ export default class HomeContainer extends Component {
           <Panel header="数据统计" key="1" style={customPanelStyle}>
           <Row gutter={16}>
             <Col span={8}>
-              <Statistic title="用户量" value={112893} />
+              <Statistic title="用户量" value={this.state.userListLength} />
             </Col>
             <Col span={8}>
-              <Statistic title="订单量" value={112893} precision={2} />
+              <Statistic title="订单量" value={this.state.orderListLength} />
             </Col>
-            {/* <Col span={8}>
-              <Statistic title="用户量" value={112893} />
-            </Col> */}
+            <Col span={8}>
+              <Statistic title="定座数" value={this.state.seats} />
+            </Col>
           </Row>
           </Panel>
           <Panel header="系统信息" key="2" style={customPanelStyle}>
@@ -53,3 +73,5 @@ export default class HomeContainer extends Component {
     )
   }
 }
+
+export default HomeContainer

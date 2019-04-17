@@ -12,12 +12,7 @@ import '@Util/axios'                        // 添加axios，用于请求数据�
 
 // 子组件
 import MainContainer from '@Page/main/index'
-import Page1Container from '@Page/page1/index'
-import Page2Container from '@Page/page2/index'
-import Page3Container from '@Page/page3/index'
 import SignContainer from '@Page/sign/index'
-import PersonalContainer from '@Page/personal/index'
-import OrdersContainer from '@Page/orders/index'
 import FalsePage from '@Page/404/index'             // 404界面
 
 ReactDOM.render(
@@ -25,13 +20,8 @@ ReactDOM.render(
         <BrowserRouter>
             <App>
                 <Switch>
-                    <Route path='/page1' component={Page1Container} />
-                    <Route path='/page2' component={Page2Container} />
-                    <Route path='/page3' component={Page3Container} />
                     <Route path='/main' component={MainContainer} />
                     <Route path='/sign' component={SignContainer} />
-                    <Route path='/personal' component={PersonalContainer} />
-                    <Route path='/orders' component={OrdersContainer} />
                     <Route path='/' exact render={() => <Redirect to='/main' />} />
                     <Route path='/404' component={FalsePage} />
                     <Route exact render={() => { return <Redirect to='/404' /> }} />

@@ -1,15 +1,22 @@
 import React,{Component } from 'react'
+import { inject, observer } from 'mobx-react';
 import {
   Table, Input, Button, Icon,Empty
 } from 'antd';
 import Highlighter from 'react-highlight-words';
 
-export default class UsersList extends Component {
+@inject('store')        // 向该组件中注入store中的数据和方法
+@observer               // 订阅store中数据的变化
+class UsersList extends Component {
   constructor(props){
     super(props)
     this.state = {
       searchText: '',
     };
+  }
+  
+  componentDidMount(){
+    this.props.store.onGetOrdersList()
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -73,29 +80,49 @@ export default class UsersList extends Component {
   render() {
     const columns = [{
       title: '序号',
-      dataIndex: 'key',
+      dataIndex: 'index',
       key: 'index',
       width: '8%',
-      ...this.getColumnSearchProps('key'),
+      ...this.getColumnSearchProps('index'),
     },{
-      title: 'UserId',
+      title: '订单号',
+      dataIndex: 'orderId',
+      key: 'orderId',
+      width: '12%',
+      ...this.getColumnSearchProps('orderId'),
+    }, {
+      title: '用户Id',
       dataIndex: 'userId',
       key: 'userId',
-      width: '20%',
+      width: '12%',
       ...this.getColumnSearchProps('userId'),
     }, {
-      title: 'UserName',
+      title: '电影Id',
+      dataIndex: 'movieId',
+      key: 'movieId',
+      width: '12%',
+      ...this.getColumnSearchProps('movieId'),
+    }, {
+      title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
-      width: '20%',
+      width: '12%',
       ...this.getColumnSearchProps('userName'),
     }, {
-      title: 'UserPhone',
-      dataIndex: 'userPhone',
-      key: 'userPhone',
-      width: '20%',
-      ...this.getColumnSearchProps('userPhone'),
-    },];
-    return this.props.usersList.length ? <Table columns={columns} dataSource={this.props.usersList} /> : <Empty/>;
+      title: '订单时间',
+      dataIndex: 'orderTime',
+      key: 'orderTime',
+      width: '15%',
+      ...this.getColumnSearchProps('orderTime'),
+    }, {
+      title: '订单内容',
+      dataIndex: 'orderContent',
+      key: 'orderContent',
+      // width: '20%',
+      ...this.getColumnSearchProps('orderContent'),
+    }];
+    return this.props.store.orderList.length ? <Table rowKey="index" columns={columns} dataSource={this.props.store.orderList} /> : <Empty/>;
   }
 }
+
+export default UsersList

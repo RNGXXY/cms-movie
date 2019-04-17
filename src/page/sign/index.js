@@ -11,11 +11,16 @@ class SignContainer extends Component{
   constructor(props){
     super(props)
   }
+
+  // 点击登录
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.store.adminLogin = true
+        this.props.store.adminName = values.adminName
+        this.props.store.remember = values.remember
+        this.props.history.replace('./main')
       }
     });
   }
@@ -30,10 +35,10 @@ class SignContainer extends Component{
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',
           backgroundPosition:'bottom left',
-          backgroundImage: "url('https://img.ivsky.com/img/bizhi/pre/201811/06/jackson-006.jpg')"}}>
+          backgroundImage: "url('/image/004.jpg')"}}>
         <Form onSubmit={this.handleSubmit} className="login-form formContainer">
           <Form.Item>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('adminName', {
               rules: [{ required: true, message: '请输入用户名!' }],
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />

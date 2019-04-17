@@ -1,15 +1,22 @@
 import React,{Component } from 'react'
+import { inject, observer } from 'mobx-react';
 import {
   Table, Input, Button, Icon,Empty
 } from 'antd';
 import Highlighter from 'react-highlight-words';
 
-export default class UsersList extends Component {
+@inject('store')        // 向该组件中注入store中的数据和方法
+@observer               // 订阅store中数据的变化
+class SeatsList extends Component {
   constructor(props){
     super(props)
     this.state = {
       searchText: '',
     };
+  }
+
+  componentDidMount(){
+    this.props.store.onGetSeat()
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -73,35 +80,32 @@ export default class UsersList extends Component {
   render() {
     const columns = [{
       title: '序号',
-      dataIndex: 'key',
+      dataIndex: 'index',
       key: 'index',
       width: '8%',
-      ...this.getColumnSearchProps('key'),
+      ...this.getColumnSearchProps('index'),
     },{
-      title: '订单号',
-      dataIndex: 'userId',
-      key: 'userId',
-      width: '15%',
-      ...this.getColumnSearchProps('userId'),
+      title: 'MovieId',
+      dataIndex: 'movieId',
+      key: 'movieId',
+      width: '20%',
+      ...this.getColumnSearchProps('movieId'),
     }, {
-      title: '用户Id',
-      dataIndex: 'userName',
-      key: 'userName',
-      width: '15%',
-      ...this.getColumnSearchProps('userName'),
-    }, {
-      title: '用户名',
-      dataIndex: 'userPhone',
-      key: 'userPhone',
-      width: '15%',
-      ...this.getColumnSearchProps('userPhone'),
-    }, {
-      title: '订单内容',
-      dataIndex: 'userPhone',
-      key: 'userPhone',
+      title: 'MovieName',
+      dataIndex: 'movieName',
+      key: 'movieName',
+      width: '20%',
+      ...this.getColumnSearchProps('movieName'),
+    },{
+      title: 'MovieSeat',
+      dataIndex: 'movieSeat',
+      key: 'movieSeat',
       // width: '20%',
-      ...this.getColumnSearchProps('userPhone'),
+      ...this.getColumnSearchProps('movieSeat'),
     }];
-    return this.props.usersList.length ? <Table columns={columns} dataSource={this.props.usersList} /> : <Empty/>;
+    return this.props.store.seatList.length ? <Table  rowKey="index"  columns={columns} dataSource={this.props.store.seatList} /> : <Empty/>;
   }
 }
+
+
+export default SeatsList

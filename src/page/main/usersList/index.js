@@ -1,75 +1,24 @@
-import React from 'react'
+import React,{Component } from 'react'
+import { inject, observer } from 'mobx-react';
 import {
-  Table, Input, Button, Icon,
+  Table, Input, Button, Icon,Empty
 } from 'antd';
 import Highlighter from 'react-highlight-words';
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 42,
-  address: 'London No. 1 Lake Park', 
-}, {
-  key: '3',
-  name: 'Jim Green',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}, {
-  key: '4',
-  name: 'Jim Red',
-  age: 32,
-  address: 'London No. 2 Lake Park',
-},{
-  key: '5',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '6',
-  name: 'Joe Black',
-  age: 42,
-  address: 'London No. 1 Lake Park', 
-}, {
-  key: '7',
-  name: 'Jim Green',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}, {
-  key: '8',
-  name: 'Jim Red',
-  age: 32,
-  address: 'London No. 2 Lake Park',
-},{
-  key: '9',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '10',
-  name: 'Joe Black',
-  age: 42,
-  address: 'London No. 1 Lake Park', 
-}, {
-  key: '11',
-  name: 'Jim Green',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}, {
-  key: '12',
-  name: 'Jim Red',
-  age: 32,
-  address: 'London No. 2 Lake Park',
-}];
 
-export default class Xx extends React.Component {
-  state = {
-    searchText: '',
-  };
+@inject('store')        // 向该组件中注入store中的数据和方法
+@observer               // 订阅store中数据的变化
+class UsersList extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      searchText: '',
+    };
+  }
+
+  componentDidMount(){
+    this.props.store.onGetUsersList()
+  }
 
   getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -131,23 +80,33 @@ export default class Xx extends React.Component {
 
   render() {
     const columns = [{
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      width: '30%',
-      ...this.getColumnSearchProps('name'),
-    }, {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: '序号',
+      dataIndex: 'index',
+      key: 'index',
+      width: '8%',
+      ...this.getColumnSearchProps('index'),
+    },{
+      title: 'UserId',
+      dataIndex: 'userId',
+      key: 'userId',
       width: '20%',
-      ...this.getColumnSearchProps('age'),
+      ...this.getColumnSearchProps('userId'),
     }, {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      ...this.getColumnSearchProps('address'),
-    }];
-    return <Table columns={columns} dataSource={data} />;
+      title: 'UserName',
+      dataIndex: 'userName',
+      key: 'userName',
+      width: '20%',
+      ...this.getColumnSearchProps('userName'),
+    }, {
+      title: 'UserPhone',
+      dataIndex: 'userPhone',
+      key: 'userPhone',
+      width: '20%',
+      ...this.getColumnSearchProps('userPhone'),
+    },];
+    return this.props.store.usersList.length ? <Table rowKey="index" columns={columns} dataSource={this.props.store.usersList} /> : <Empty/>;
   }
 }
+
+
+export default UsersList
