@@ -15,16 +15,22 @@ class HomeContainer extends Component {
   }
 
   async componentDidMount(){
+    if(!this.props.store.adminLogin) return false
     await this.props.store.onGetUsersList()
     await this.props.store.onGetOrdersList()
     await this.props.store.onGetSeat()
     let userListLength = this.props.store.usersList.length
     let orderListLength = this.props.store.orderList.length
-    let seats = this.props.store.seatList.length
+    let seats = []
+    this.props.store.seatList.forEach(item=>{
+     item.newMovieSeat.forEach(newItem=>{
+      seats.push(newItem)
+     })
+    })
     this.setState({
       userListLength:userListLength,
       orderListLength:orderListLength,
-      seats:seats
+      seats:seats.length
     })
   }
 

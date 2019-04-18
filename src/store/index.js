@@ -46,6 +46,7 @@ class Store {
     if (resData.data.code == 200) {
       resData.data.data.forEach((item,index) => {
         let movieSeat = []
+        item.newMovieSeat =  item.movieSeat
         item.index = String(index+1)
         item.movieSeat.forEach(item=>{
           let key = Object.keys(item)[0]

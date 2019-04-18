@@ -15,8 +15,9 @@ class UsersList extends Component {
     };
   }
   
-  componentDidMount(){
-    this.props.store.onGetOrdersList()
+  async componentDidMount(){
+    await this.props.store.onGetOrdersList()
+    console.log(1111,this.props.store.orderList)
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -57,14 +58,15 @@ class UsersList extends Component {
         setTimeout(() => this.searchInput.select());
       }
     },
-    render: (text) => (
-      <Highlighter
-        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-        searchWords={[this.state.searchText]}
-        autoEscape
-        textToHighlight={text.toString()}
-      />
-    ),
+    // render: (text) => (
+    //   <Highlighter
+    //     highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+    //     searchWords={[this.state.searchText]}
+    //     autoEscape
+    //     // textToHighlight={text.toString()}
+    //     textToHighlight={text}
+    //   />
+    // ),
   })
 
   handleSearch = (selectedKeys, confirm) => {
@@ -88,25 +90,25 @@ class UsersList extends Component {
       title: '订单号',
       dataIndex: 'orderId',
       key: 'orderId',
-      width: '12%',
+      width: '10%',
       ...this.getColumnSearchProps('orderId'),
     }, {
       title: '用户Id',
       dataIndex: 'userId',
       key: 'userId',
-      width: '12%',
+      width: '10%',
       ...this.getColumnSearchProps('userId'),
     }, {
       title: '电影Id',
       dataIndex: 'movieId',
       key: 'movieId',
-      width: '12%',
+      width: '10%',
       ...this.getColumnSearchProps('movieId'),
     }, {
       title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
-      width: '12%',
+      width: '10%',
       ...this.getColumnSearchProps('userName'),
     }, {
       title: '订单时间',
@@ -114,14 +116,28 @@ class UsersList extends Component {
       key: 'orderTime',
       width: '15%',
       ...this.getColumnSearchProps('orderTime'),
-    }, {
-      title: '订单内容',
-      dataIndex: 'orderContent',
-      key: 'orderContent',
+    },{
+      title: '电影名称',
+      dataIndex: 'movieName',
+      key: 'movieName',
       // width: '20%',
-      ...this.getColumnSearchProps('orderContent'),
-    }];
+      ...this.getColumnSearchProps('movieName'),
+    },{
+      title: '电影票数',
+      dataIndex: 'number',
+      key: 'number',
+      // width: '20%',
+      ...this.getColumnSearchProps('number'),
+    },{
+      title: '订单金额',
+      dataIndex: 'money',
+      key: 'money',
+      // width: '20%',
+      ...this.getColumnSearchProps('money'),
+    }
+  ];
     return this.props.store.orderList.length ? <Table rowKey="index" columns={columns} dataSource={this.props.store.orderList} /> : <Empty/>;
+    // return <Empty/>;
   }
 }
 
