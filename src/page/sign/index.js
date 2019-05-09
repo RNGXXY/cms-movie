@@ -17,10 +17,15 @@ class SignContainer extends Component{
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.store.adminLogin = true
-        this.props.store.adminName = values.adminName
-        this.props.store.remember = values.remember
-        this.props.history.replace('./main')
+        if(values.adminName == 'admin' && values.password == '111111'){
+          this.props.store.adminLogin = true
+          this.props.store.adminName = values.adminName
+          this.props.store.remember = values.remember
+          this.props.history.replace('./main')
+        }else{
+          alert('用户名或密码错误，请重新输入')
+        }
+        
       }
     });
   }

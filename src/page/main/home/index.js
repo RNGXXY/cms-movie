@@ -38,7 +38,7 @@ class HomeContainer extends Component {
     const Panel = Collapse.Panel;
 
     const text = `
-      狗子的管理系统
+      影说网后台管理系统
     `;
 
     const customPanelStyle = {

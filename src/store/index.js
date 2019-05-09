@@ -8,6 +8,7 @@ class Store {
   @observable usersList = [];         // 用户数据列表
   @observable orderList = [];         // 订单数据列表
   @observable seatList = [];         // 座位数据
+  @observable collectionList = [];         // 收藏数据
   @observable adminLogin = false;    // 管理员登录否
   @observable adminName = '';         // 用户名
   @observable remember = false;         // 是否记住登录信息（名，密码）
@@ -59,6 +60,18 @@ class Store {
       this.seatList = resData.data.data
     }
   }
+
+    // 获取收藏数据列表
+    @action onGetCollectionList = async () => {
+      let resData = await axios('cms/collectionList/dataList')
+      if (resData.data.code == 200) {
+        resData.data.data.forEach((item,index) => {
+          item.index = String(index+1)
+          item.orderTime = onHandleTime(Number(item.timeStamp))
+        });
+        this.collectionList = resData.data.data
+      }
+    }
 }
 
 export default new Store()

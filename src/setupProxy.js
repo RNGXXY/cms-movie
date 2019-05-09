@@ -10,7 +10,7 @@ module.exports = function(app){
     }))
 
     app.use(proxy('/cms',{
-        target:'http://10.2.140.170:9000',
+        target:'http://localhost:9000',
         changeOrigin:true,
         pathRewrite:{
             '^/cms':''

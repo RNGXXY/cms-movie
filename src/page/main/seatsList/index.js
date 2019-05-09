@@ -1,7 +1,7 @@
 import React,{Component } from 'react'
 import { inject, observer } from 'mobx-react';
 import {
-  Table, Input, Button, Icon,Empty
+  Table, Input, Button, Icon,Empty,Popconfirm
 } from 'antd';
 import Highlighter from 'react-highlight-words';
 
@@ -77,33 +77,67 @@ class SeatsList extends Component {
     this.setState({ searchText: '' });
   }
 
+  handleDelete = async (record) => {
+    let { key ,movieId , sceneId} = record
+    let resData = await this.axios({
+      url:'/cms/seat/releaseSeat',
+      method:'DELETE',
+      data:{
+        movieId,
+        sceneId
+      }
+    })
+    if(resData.status == 200 ){
+      this.props.store.seatList = this.props.store.seatList.filter(item => item.key !== key && item.movieId !== movieId && item.sceneId !== sceneId)
+    }
+    // const dataSource = [...this.props.store.seatList];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  }
+  columns = [{
+    title: '序号',
+    dataIndex: 'index',
+    key: 'index',
+    width: '8%',
+    ...this.getColumnSearchProps('index'),
+  },{
+    title: '电影ID',
+    dataIndex: 'movieId',
+    key: 'movieId',
+    width: '20%',
+    ...this.getColumnSearchProps('movieId'),
+  },{
+    title: '影厅ID',
+    dataIndex: 'sceneId',
+    key: 'sceneId',
+    width: '20%',
+    ...this.getColumnSearchProps('sceneId'),
+  }, {
+    title: '电影名称',
+    dataIndex: 'movieName',
+    key: 'movieName',
+    width: '20%',
+    ...this.getColumnSearchProps('movieName'),
+  },{
+    title: '已占座位',
+    dataIndex: 'movieSeat',
+    key: 'movieSeat',
+    // width: '20%',
+    ...this.getColumnSearchProps('movieSeat'),
+  },{
+    title: '操作',
+    dataIndex: 'operation',
+    render: (text, record) => (
+      this.props.store.seatList.length >= 1
+        ? (
+          <Popconfirm title="确定释放当前座位" onConfirm={() => this.handleDelete(record)}>
+            <a href="javascript:;">清场</a>
+          </Popconfirm>
+        ) : null
+    ),
+  },];
   render() {
-    const columns = [{
-      title: '序号',
-      dataIndex: 'index',
-      key: 'index',
-      width: '8%',
-      ...this.getColumnSearchProps('index'),
-    },{
-      title: 'MovieId',
-      dataIndex: 'movieId',
-      key: 'movieId',
-      width: '20%',
-      ...this.getColumnSearchProps('movieId'),
-    }, {
-      title: 'MovieName',
-      dataIndex: 'movieName',
-      key: 'movieName',
-      width: '20%',
-      ...this.getColumnSearchProps('movieName'),
-    },{
-      title: 'MovieSeat',
-      dataIndex: 'movieSeat',
-      key: 'movieSeat',
-      // width: '20%',
-      ...this.getColumnSearchProps('movieSeat'),
-    }];
-    return this.props.store.seatList.length ? <Table  rowKey="index"  columns={columns} dataSource={this.props.store.seatList} /> : <Empty/>;
+    
+    return this.props.store.seatList.length > 0 ? <Table  rowKey="index"  columns={this.columns} dataSource={this.props.store.seatList} /> : <Empty/>;
   }
 }
 

@@ -7,6 +7,7 @@ import HomeContainer from './home'
 import UsersList from './usersList'
 import OrdersList from './ordersList'
 import SeatsList from './seatsList'
+import CollectionList from './collectionList'
 
 const TabPane = Tabs.TabPane;
 
@@ -33,8 +34,8 @@ class Page2Container extends Component{
         return(
             <div>
                 <PageHeader
-                    title={'狗子'}
-                    subTitle="狗子的后台管理系统"
+                    title={'影说网'}
+                    subTitle="影说网后台管理系统"
                     extra={[
                         <Button onClick={this.onSignOut} key="1" type="primary">
                           退出登录
@@ -60,6 +61,9 @@ class Page2Container extends Component{
                 <TabPane tab={<span><Icon type="bar-chart" />座位管理</span>} key="4">
                     <SeatsList />
                 </TabPane> 
+                <TabPane tab={<span><Icon type="bar-chart" />收藏管理</span>} key="5">
+                    <CollectionList />
+                </TabPane>
             </Tabs>
             </div>
            

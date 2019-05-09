@@ -7,17 +7,16 @@ import Highlighter from 'react-highlight-words';
 
 @inject('store')        // 向该组件中注入store中的数据和方法
 @observer               // 订阅store中数据的变化
-class UsersList extends Component {
+class SeatsList extends Component {
   constructor(props){
     super(props)
     this.state = {
       searchText: '',
     };
   }
-  
-  async componentDidMount(){
-    await this.props.store.onGetOrdersList()
-    console.log(1111,this.props.store.orderList)
+
+  componentDidMount(){
+    this.props.store.onGetCollectionList()
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -58,15 +57,14 @@ class UsersList extends Component {
         setTimeout(() => this.searchInput.select());
       }
     },
-    // render: (text) => (
-    //   <Highlighter
-    //     highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-    //     searchWords={[this.state.searchText]}
-    //     autoEscape
-    //     // textToHighlight={text.toString()}
-    //     textToHighlight={text}
-    //   />
-    // ),
+    render: (text) => (
+      <Highlighter
+        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        searchWords={[this.state.searchText]}
+        autoEscape
+        textToHighlight={text.toString()}
+      />
+    ),
   })
 
   handleSearch = (selectedKeys, confirm) => {
@@ -87,58 +85,33 @@ class UsersList extends Component {
       width: '8%',
       ...this.getColumnSearchProps('index'),
     },{
-      title: '订单号',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      width: '10%',
-      ...this.getColumnSearchProps('orderId'),
-    }, {
-      title: '影厅Id',
-      dataIndex: 'sceneId',
-      key: 'sceneId',
-      width: '10%',
-      ...this.getColumnSearchProps('sceneId'),
-    }, {
-      title: '电影Id',
-      dataIndex: 'movieId',
-      key: 'movieId',
-      width: '10%',
-      ...this.getColumnSearchProps('movieId'),
-    }, {
+      title: '收藏ID',
+      dataIndex: 'id',
+      key: 'id',
+      width: '20%',
+      ...this.getColumnSearchProps('id'),
+    },{
       title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
-      width: '10%',
+      width: '20%',
       ...this.getColumnSearchProps('userName'),
     }, {
-      title: '订单时间',
-      dataIndex: 'orderTime',
-      key: 'orderTime',
-      width: '15%',
-      ...this.getColumnSearchProps('orderTime'),
-    },{
       title: '电影名称',
       dataIndex: 'movieName',
       key: 'movieName',
-      // width: '20%',
+      width: '20%',
       ...this.getColumnSearchProps('movieName'),
     },{
-      title: '电影票数',
-      dataIndex: 'number',
-      key: 'number',
+      title: '收藏时间',
+      dataIndex: 'orderTime',
+      key: 'orderTime',
       // width: '20%',
-      ...this.getColumnSearchProps('number'),
-    },{
-      title: '订单金额',
-      dataIndex: 'money',
-      key: 'money',
-      // width: '20%',
-      ...this.getColumnSearchProps('money'),
-    }
-  ];
-    return this.props.store.orderList.length ? <Table rowKey="index" columns={columns} dataSource={this.props.store.orderList} /> : <Empty/>;
-    // return <Empty/>;
+      ...this.getColumnSearchProps('orderTime'),
+    }];
+    return this.props.store.collectionList.length ? <Table  rowKey="index"  columns={columns} dataSource={this.props.store.collectionList} /> : <Empty/>;
   }
 }
 
-export default UsersList
+
+export default SeatsList

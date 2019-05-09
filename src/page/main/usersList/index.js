@@ -86,19 +86,19 @@ class UsersList extends Component {
       width: '8%',
       ...this.getColumnSearchProps('index'),
     },{
-      title: 'UserId',
+      title: '用户ID',
       dataIndex: 'userId',
       key: 'userId',
       width: '20%',
       ...this.getColumnSearchProps('userId'),
     }, {
-      title: 'UserName',
+      title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
       width: '20%',
       ...this.getColumnSearchProps('userName'),
     }, {
-      title: 'UserPhone',
+      title: '用户电话',
       dataIndex: 'userPhone',
       key: 'userPhone',
       width: '20%',
