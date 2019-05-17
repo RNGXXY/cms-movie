@@ -88,7 +88,7 @@ class SeatsList extends Component {
       }
     })
     if(resData.status == 200 ){
-      this.props.store.seatList = this.props.store.seatList.filter(item => item.key !== key && item.movieId !== movieId && item.sceneId !== sceneId)
+      this.props.store.seatList = this.props.store.seatList.filter(item => item.movieId !== movieId && item.sceneId !== sceneId)
     }
     // const dataSource = [...this.props.store.seatList];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
